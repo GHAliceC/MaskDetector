@@ -120,14 +120,8 @@ for layer in model.layers[:-4]:
 
 # In[8]:
 
-
+# Refer to https://www.tensorflow.org/guide/keras/custom_callback
 class SubsetAccuracy(tf.keras.callbacks.Callback):
-    """
-    We want to monitor accuracy in the validation set separately for real and artificial face masks.
-    This callback will print this to the output, and store the values for each epoch.
-    
-    It also stores the best model (according to validation accuracy on the masked faces) to disk.
-    """
     
     def __init__(self, real_val_gen=None):
         self.real_val_gen = real_val_gen
@@ -180,16 +174,11 @@ test_pred = best_model.predict(test_generator_test)
 
 # In[13]:
 
-
+# Refer to https://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html#sphx-glr-auto-examples-model-selection-plot-confusion-matrix-py
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Confusion matrix',
                           cmap=plt.cm.Blues):
-    """
-    This function prints and plots the confusion matrix.
-    Normalization can be applied by setting `normalize=True`.
-    From: https://scikit-learn.org/0.18/auto_examples/model_selection/plot_confusion_matrix.html
-    """
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
     plt.colorbar()
@@ -213,7 +202,7 @@ def plot_confusion_matrix(cm, classes,
 
 # In[14]:
 
-
+# validate
 # val_pred_bin = [x[0] > 0.5 for x in val_pred]
 
 # acc = metrics.accuracy_score(val_generator_real.classes, val_pred_bin)
@@ -322,17 +311,6 @@ print(Train_v1)
 for i in Valid_Loss_v1:
     Valid_v1.append(1 - i)
 print(Valid_v1)
-# Train_v1 = [0.9818,0.9880,0.9869,0.9940,0.9890,0.9875,0.9897,0.9881,0.9894,0.9895]
-# Valid_v1 = [0.9620,0.9781,0.9965,0.9961,0.9957,0.9977,0.9910,0.9949,0.9959,0.9949]
-
-import matplotlib.pyplot as plt
-import pandas as pd
-# df = pd.DataFrame({"Epoch": Epoch; "Train_Loss_v1": Train_Loss_v1, "Valid_Loss_v1": Valid_Loss_v1,
-#                   "Train_acc_v1": Train_v1, "Valid_acc_v1": Valid_v1})
-# plt.plot( "Epoch", 'Train_acc_v1', data=df, marker='-', markerfacecolor='blue', color='skyblue', linewidth=2)
-# plt.plot( 'Epoch', 'Valid_acc_v1', data=df, marker='', color='olive', linewidth=2)
-# plt.plot( 'Epoch', 'y3', data=df, marker='', color='olive', linewidth=2, linestyle='dashed', label="toto")
-# plt.legend()
 
 
 acc = Train_v1
