@@ -93,7 +93,8 @@ RAW_IMAGES_DIR = DATA_DIR / 'raw_images'
 
 # In[28]:
 
-
+# Download VGGFace2 test dataset
+# Refer to https://gist.github.com/lzhbrian/1275a50a36fefc6c4c2b28a7d6aca505
 import requests
 import getpass
 import sys
@@ -217,6 +218,8 @@ def check_face_landmarks(face_landmarks):
     else:
         return False
 
+# put a mask on a human face
+# Refer to https://programmer.help/blogs/face-mask-automatic-face-mask-tool.html
 def mask_face(face_img, mask_img, face_landmark):
     nose_bridge = face_landmark['nose_bridge']
     nose_point = nose_bridge[len(nose_bridge) * 1 // 4]
@@ -473,7 +476,7 @@ for f in files:
         row.append(img_name)
         csvwriter.writerow(row)
         
-#         Tricks 1: keep size over 50*50 pixels' face image
+#       keep size over 50*50 pixels' face image
         if box_ymax - box_ymin < 50:
             continue
         
@@ -482,12 +485,10 @@ for f in files:
         img_crop_name = img_name[:-4] + "_" + str(count) + ".jpg"
         if c == 'with_mask': 
             pic.save(os.path.join(real_masked_val_dir, img_crop_name))
-#             pic.show()
-#             print(os.path.join(real_masked_img_dir, img_crop_name))
+
         else:
             pic.save(os.path.join(real_not_masked_val_dir, img_crop_name))
-#             pic.show()
-#             print(os.path.join(real_not_masked_img_dir, img_crop_name))  
+
 output_csv.close()
 
 
